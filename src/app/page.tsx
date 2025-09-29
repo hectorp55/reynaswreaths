@@ -64,7 +64,7 @@ export default function Home() {
       <main className="">
         <section className="w-full h-100 bg-(--blossom-pink) relative">
           <span>
-            <Image alt="Decoration banner depicting a table with construction paper on it." src="/banner.jpg" fill={true} objectFit="cover"></Image>
+            <Image alt="Decoration banner depicting a table with construction paper on it." src="/banner.jpg" fill={true} style={{ objectFit: 'cover' }}></Image>
           </span>
         </section>
         <section className="flex flex-wrap justify-between p-10">

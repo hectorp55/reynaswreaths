@@ -1,84 +1,59 @@
+"use client"
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Item from "./components/item/item";
 import Image from 'next/image';
-
-const placeHolderItems: item[] = [
-  {
-    image: "image",
-    name: "name1",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name2",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name3",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name4",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name5",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name6",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name7",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name8",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name9",
-    price: 100
-  },
-  {
-    image: "image",
-    name: "name10",
-    price: 100
-  },
-];
+import { useProductSheet } from "./hooks/queries/fetchProducts";
+import Socials from "./components/socials/socials";
+import { useRouter } from 'next/navigation';
+import { Route } from "./components/nav-bar";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function Home() {
+  const { data, isLoading, error } = useProductSheet();
+  const router = useRouter();
 
   return (
     <div>
+      {/* Header */}
       <Header/>
       <main className="">
+        {/* Website Banner */}
         <section className="w-full h-100 bg-(--blossom-pink) relative">
           <span>
             <Image alt="Decoration banner depicting a table with construction paper on it." src="/banner.jpg" fill={true} style={{ objectFit: 'cover' }}></Image>
           </span>
         </section>
-        <section className="flex flex-wrap justify-between p-10">
-          {placeHolderItems.map((item) => {
-            return <Item 
-              key={item.name} image={""} 
-              name={item.name} price={item.price}
-              className="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/5">
-            </Item>
-          })}
-          {/* Items */}
+        {/* Products */}
+        <section className="py-10 px-70">
+          <section className="flex justify-between">
+            <h1 className="text-2xl">Latest Products</h1>
+            <button className="flex items-center underline" onClick={() => router.push(Route.Shop)}>
+              View More 
+              <MdKeyboardArrowRight/>
+            </button>
+          </section>
+          <section className="grid grid-cols-5 gap-4">
+            {isLoading && <div>Loading...</div>}
+            {/* Display only first 5 items in list on home page */}
+            {!isLoading && data && data.slice(0, 5).map((product) => {
+              return <Item 
+                key={product.name} image={product.image} 
+                name={product.name} price={product.price}
+                className="">
+              </Item>
+            })}
+          </section>
+        </section>
+        {/* Instagram Feed */}
+        <section className="p-10">
+          <header className="flex justify-center text-2xl">
+            <h1>Recent News</h1>
+          </header>
+          <Socials className="grid grid-cols-5 gap-4"/>
         </section>
       </main>
-
+      {/* Footer */}
       <Footer/>
     </div>
   );

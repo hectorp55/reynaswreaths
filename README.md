@@ -18,8 +18,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODOs
 
-- Create database for product list
+- Create database for product list (can we make this a google sheet api to save money and ease of use?)
 - Upcoming page
 - Shopping page
 - Cart
 - Search product names
+- Facebook posts display
+- Tik Tok link
+- Custom order request

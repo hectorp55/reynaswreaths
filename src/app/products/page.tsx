@@ -5,14 +5,15 @@ import Item from '../components/item/item';
 import PageForm from '../components/page-form';
 import { ProductColumn } from '../models/column';
 import { IoArrowDownOutline, IoArrowUpOutline } from "react-icons/io5";
+import Loading from '../components/loading';
 
 function ProductsPage() {
     const [sortField, setSortField] = React.useState<ProductColumn | undefined>(ProductColumn.Price);
     const [isSortAsc, setIsSortAsc] = React.useState(true);
-    const { data, isLoading, error } = useProductSheet(sortField, isSortAsc);
+    const { data, isLoading } = useProductSheet(sortField, isSortAsc);
 
     const onFilterSelected = (value: string) => {
-        const column = ProductColumn[sortField as keyof typeof ProductColumn];
+        const column = ProductColumn[value as keyof typeof ProductColumn];
         setSortField(column);
     }
 
@@ -34,8 +35,8 @@ function ProductsPage() {
                         {isSortAsc ? <IoArrowUpOutline/> : <IoArrowDownOutline/>}
                     </button>
                 </section>
+                {isLoading && <Loading/>}
                 <section className="grid grid-cols-5 gap-4">
-                    {isLoading && <div>Loading...</div>}
                     {!isLoading && data && data.map((product) => {
                         return <Item 
                         key={product.name} image={product.image} 

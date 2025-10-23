@@ -27,7 +27,7 @@ export async function getSheetByName(sheetName: string) {
     return sheet;
 }
 
-export function sortSheets(rows: GoogleSpreadsheetRow<Record<string, any>>[], sortField: string, isSortAsc: string) {
+export function sortSheets(rows: GoogleSpreadsheetRow<Record<string, any>>[], sortField: string, isSortAsc: string) { // eslint-disable-line @typescript-eslint/no-explicit-any -- sheets can contain different value types
     const isAsc = isSortAsc.toLowerCase() === "true";
     const column = ProductColumn[sortField as keyof typeof ProductColumn]
     const sortedRows = rows.sort((a, b) => {

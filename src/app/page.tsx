@@ -8,9 +8,10 @@ import Socials from "./components/socials/socials";
 import { useRouter } from 'next/navigation';
 import { Route } from "./components/nav-bar";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import Loading from "./components/loading";
 
 export default function Home() {
-  const { data, isLoading, error } = useProductSheet();
+  const { data, isLoading } = useProductSheet();
   const router = useRouter();
 
   return (
@@ -33,17 +34,19 @@ export default function Home() {
               <MdKeyboardArrowRight/>
             </button>
           </section>
-          <section className="grid grid-cols-5 gap-4">
-            {isLoading && <div>Loading...</div>}
-            {/* Display only first 5 items in list on home page */}
-            {!isLoading && data && data.slice(0, 5).map((product) => {
-              return <Item 
-                key={product.name} image={product.image} 
-                name={product.name} price={product.price}
-                className="">
-              </Item>
-            })}
-          </section>
+          {isLoading && <Loading/>}
+          {!isLoading && (
+            <section className="grid grid-cols-5 gap-4">
+              {/* Display only first 5 items in list on home page */}
+              {data && data.slice(0, 5).map((product) => {
+                return <Item 
+                  key={product.name} image={product.image} 
+                  name={product.name} price={product.price}
+                  className="">
+                </Item>
+              })}
+            </section>
+          )}
         </section>
         {/* Instagram Feed */}
         <section className="p-10">
